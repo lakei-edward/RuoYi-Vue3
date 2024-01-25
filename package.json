@@ -6,10 +6,11 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "d:\Project\益阳项目\yydjd_vue\git.sh",
     "build:prod": "vite build",
     "build:stage": "vite build --mode staging",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --cache --write ."
   },
   "repository": {
     "type": "git",
@@ -35,11 +36,13 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "4.5.0",
     "@vue/compiler-sfc": "3.3.9",
+    "prettier": "^3.2.4",
     "sass": "1.69.5",
+    "typescript": "^5.2.2",
     "unplugin-auto-import": "0.17.1",
+    "unplugin-vue-setup-extend-plus": "1.0.0",
     "vite": "5.0.4",
     "vite-plugin-compression": "0.5.1",
-    "vite-plugin-svg-icons": "2.0.1",
-    "unplugin-vue-setup-extend-plus": "1.0.0"
+    "vite-plugin-svg-icons": "2.0.1"
   }
 }
