@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "d:\Project\益阳项目\yydjd_vue\git.sh",
+    "dev": "vite",
     "build:prod": "vite build",
     "build:stage": "vite build --mode staging",
     "preview": "vite preview",
