@@ -3,6 +3,7 @@
     <svg
       :class="{ 'is-active': isActive }"
       class="hamburger"
+      :fill="isDark ? '#fff' : '#000'"
       viewBox="0 0 1024 1024"
       xmlns="http://www.w3.org/2000/svg"
       width="64"
@@ -15,7 +16,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { useDarkToggle } from '@/hooks/core'
+const { isDark } = useDarkToggle()
 defineProps({
   isActive: {
     type: Boolean,
@@ -35,6 +38,7 @@ const toggleClick = () => {
   vertical-align: middle;
   width: 20px;
   height: 20px;
+  color: #fff;
 }
 
 .hamburger.is-active {

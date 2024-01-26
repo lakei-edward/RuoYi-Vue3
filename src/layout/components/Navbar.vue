@@ -9,25 +9,28 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!settingsStore.topNav" />
     <top-nav id="topmenu-container" class="topmenu-container" v-if="settingsStore.topNav" />
 
-    <div class="right-menu">
+    <div class="right-menu flex items-center">
       <template v-if="appStore.device !== 'mobile'">
-        <header-search id="header-search" class="right-menu-item" />
-
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
-        </el-tooltip>
+        <header-search id="header-search" class="right-menu-item flex items-center" />
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
+          <size-select id="size-select" class="right-menu-item flex items-center hover-effect" />
         </el-tooltip>
+
+        <!-- <el-switch v-model="isDark" @change="toggleDark">
+          <template #active-action>
+            <span class="custom-active-action">123123</span>
+          </template>
+          <template #inactive-action>
+            <span class="custom-inactive-action">F123123123</span>
+          </template>
+        </el-switch> -->
+        <dark-toggle></dark-toggle>
       </template>
-      <div class="avatar-container">
+
+      <div class="avatar-container flex a-c">
         <el-dropdown @command="handleCommand" class="right-menu-item hover-effect" trigger="click">
           <div class="avatar-wrapper">
             <img :src="userStore.avatar" class="user-avatar" />
@@ -62,10 +65,10 @@ import SizeSelect from '@/components/SizeSelect'
 import HeaderSearch from '@/components/HeaderSearch'
 import RuoYiGit from '@/components/RuoYi/Git'
 import RuoYiDoc from '@/components/RuoYi/Doc'
+import DarkToggle from '@/components/DarkToggle'
 import useAppStore from '@/store/modules/app'
 import useUserStore from '@/store/modules/user'
 import useSettingsStore from '@/store/modules/settings'
-
 const appStore = useAppStore()
 const userStore = useUserStore()
 const settingsStore = useSettingsStore()
@@ -112,7 +115,7 @@ function setLayout() {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
+  // background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
@@ -144,26 +147,19 @@ function setLayout() {
 
   .right-menu {
     float: right;
-    height: 100%;
-    line-height: 50px;
-    display: flex;
-
+    // height: 100%;
+    // line-height: 50px;
     &:focus {
       outline: none;
     }
 
     .right-menu-item {
-      display: inline-block;
       padding: 0 8px;
-      height: 100%;
       font-size: 18px;
       color: #5a5e66;
-      vertical-align: text-bottom;
-
       &.hover-effect {
         cursor: pointer;
         transition: background 0.3s;
-
         &:hover {
           background: rgba(0, 0, 0, 0.025);
         }

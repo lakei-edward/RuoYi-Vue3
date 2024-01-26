@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    {{ down.count }}
     <el-row :gutter="20">
       <!--部门数据-->
       <el-col :span="4" :xs="24">
@@ -369,7 +370,7 @@
   </div>
 </template>
 
-<script setup name="User">
+<script setup name="User" lang="ts">
 import { getToken } from '@/utils/auth'
 import {
   changeUserStatus,
@@ -381,6 +382,15 @@ import {
   addUser,
   deptTreeSelect
 } from '@/api/system/user'
+
+import useCountDown from '@/hooks/useCountDown'
+import { onMounted } from 'vue'
+
+const down = useCountDown()
+down.countDown()
+onMounted(() => {
+  console.log(23)
+})
 
 const router = useRouter()
 const { proxy } = getCurrentInstance()

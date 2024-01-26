@@ -137,6 +137,7 @@ function querySearch(query) {
 
 onMounted(() => {
   searchPool.value = generateRoutes(routes.value)
+  console.log("🚀 ~ onMounted ~ searchPool.value:", searchPool.value)
 })
 
 watchEffect(() => {
