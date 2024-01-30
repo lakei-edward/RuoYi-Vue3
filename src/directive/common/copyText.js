@@ -3,64 +3,43 @@
  * Copyright (c) 2022 ruoyi
  */
 
+import { onBeforeUnmount, toValue } from 'vue'
+import { ElMessage } from 'element-plus'
 export default {
-  beforeMount(el, { value, arg }) {
-    if (arg === 'callback') {
-      el.$copyCallback = value
-    } else {
-      el.$copyValue = value
-      const handler = () => {
-        copyTextToClipboard(el.$copyValue)
-        if (el.$copyCallback) {
-          el.$copyCallback(el.$copyValue)
-        }
+  mounted(el, { value, arg, modifiers }) {
+    el.$arg = arg || 'success'
+    el.$value = value
+    el.handler = () => {
+      if (!el.$value) {
+        return
       }
-      el.addEventListener('click', handler)
-      el.$destroyCopy = () => el.removeEventListener('click', handler)
+      // 动态创建 textarea 标签
+      const textarea = document.createElement('textarea')
+      // 将该 textarea 设为 readonly 防止 iOS 下自动唤起键盘，同时将 textarea 移出可视区域
+      textarea.readOnly = 'readonly'
+      textarea.style.position = 'absolute'
+      textarea.style.left = '-9999px'
+      // 将要 copy 的值赋给 textarea 标签的 value 属性
+      textarea.value = el.$value
+      // 将 textarea 插入到 body 中
+      document.body.appendChild(textarea)
+      // 选中值并复制
+      textarea.select()
+      const result = document.execCommand('Copy')
+      if (result) {
+        ElMessage({
+          message: '复制成功',
+          type: el.$arg
+        })
+      }
+      document.body.removeChild(textarea)
     }
+    el.addEventListener('dblclick', el.handler)
+  },
+  updated(el, { value }) {
+    el.$value = value
+  },
+  beforeUnmount(el, { value, arg }) {
+    el.removeEventListener('dblclick', el.handler)
   }
-}
-
-function copyTextToClipboard(input, { target = document.body } = {}) {
-  const element = document.createElement('textarea')
-  const previouslyFocusedElement = document.activeElement
-
-  element.value = input
-
-  // Prevent keyboard from showing on mobile
-  element.setAttribute('readonly', '')
-
-  element.style.contain = 'strict'
-  element.style.position = 'absolute'
-  element.style.left = '-9999px'
-  element.style.fontSize = '12pt' // Prevent zooming on iOS
-
-  const selection = document.getSelection()
-  const originalRange = selection.rangeCount > 0 && selection.getRangeAt(0)
-
-  target.append(element)
-  element.select()
-
-  // Explicit selection workaround for iOS
-  element.selectionStart = 0
-  element.selectionEnd = input.length
-
-  let isSuccess = false
-  try {
-    isSuccess = document.execCommand('copy')
-  } catch {}
-
-  element.remove()
-
-  if (originalRange) {
-    selection.removeAllRanges()
-    selection.addRange(originalRange)
-  }
-
-  // Get the focus back on the previously focused element, if any
-  if (previouslyFocusedElement) {
-    previouslyFocusedElement.focus()
-  }
-
-  return isSuccess
 }

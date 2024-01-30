@@ -1,14 +1,13 @@
 <template>
-  <div class="grid grid-cols-4 gap-4 p-16">
-    <div v-for="item in 9">{{ item }} <el-button type="primary" @click="debounceClick">Primary</el-button></div>
+  <div class="p-28">
+    <el-input v-model="show"></el-input>
+    <Test message="Hello from TSX component!" :show="show"></Test>
+    <Child message="Hello from TSX component!" :show="show"></Child>
   </div>
 </template>
-<script setup lang="ts">
-import { useDebounce, useThrottle } from '@/hooks/core'
-const { debounce } = useDebounce()
-const { throttle } = useThrottle()
-
-const debounceClick = debounce((e: Event) => {
-  console.log(e)
-})
+<script setup lang="tsx">
+import Test from './test/test.vue'
+import Child from './test/child'
+import { ref } from 'vue'
+const show = ref('werwer')
 </script>

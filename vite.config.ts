@@ -56,6 +56,9 @@ export default defineConfig(({ mode, command }) => {
             }
           }
         ]
+      },
+      modules: {
+        localsConvention: 'camelCase'
       }
     }
   }

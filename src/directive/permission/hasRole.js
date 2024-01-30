@@ -10,14 +10,20 @@ export default {
     const { value } = binding
     const super_admin = 'admin'
     const roles = useUserStore().roles
+    console.log('🚀 ~ mounted ~ roles:', roles)
 
     if (value && value instanceof Array && value.length > 0) {
       const roleFlag = value
+      console.log('🚀 ~ mounted ~ roleFlag:', roleFlag)
 
       const hasRole = roles.some(role => {
+        console.log(super_admin === role)
+        console.log("🚀 ~ hasRole ~ role:", role)
+        console.log("🚀 ~ hasRole ~ super_admin:", super_admin)
         return super_admin === role || roleFlag.includes(role)
       })
 
+      console.log('🚀 ~ mounted ~ hasRole:', hasRole)
       if (!hasRole) {
         el.parentNode && el.parentNode.removeChild(el)
       }
