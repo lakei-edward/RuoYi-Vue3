@@ -1,21 +1,31 @@
-import { ref, reactive } from 'vue'
+import { ref, reactive, defineComponent } from 'vue'
 import styles from './index.module.scss'
-export default function (props) {
-  const msg = ref('tsx component')
-  const state = reactive({
-    name: 'lakeiedward'
-  })
-  const myBooleanValue = true
-  return (
-    <div class="flex justify-between items-center">
-      <h1>{props.show}</h1>
-      <h1>{props.message}</h1>
-      <p>This is a TSX component in Vue 3!</p>
-      <div class={styles.box} onClick={() => (msg.value = '123')}>
-        {msg.value}
-      </div>
-      <div>{state.name}</div>
-      <p>{myBooleanValue.toString()}</p>
-    </div>
-  )
-}
+
+export default defineComponent({
+  props: {
+    show: { type: String, default: 'false' },
+    message: {
+      type: String,
+      required: true
+    }
+  },
+  setup() {
+    const msg = ref('tsx component')
+    const User = (
+      <ul>
+        {[1, 2, 3].map(r => (
+          <li>
+            {r}-{msg.value}
+          </li>
+        ))}
+      </ul>
+    )
+    return () => {
+      return (
+        <div>
+          <User></User>
+        </div>
+      )
+    }
+  }
+})

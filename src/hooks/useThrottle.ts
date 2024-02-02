@@ -3,14 +3,14 @@
  */
 export default function () {
   const throttle = (func: Function, delay: number = 1000) => {
-    let timer: any = null
+    let wait: boolean = false
     return function () {
-      if (!timer) {
-        timer = setTimeout(() => {
-          func.apply(this, arguments)
-          timer = null
-        }, delay)
-      }
+      if (wait) return
+      func.apply(this, arguments)
+      wait = true
+      setTimeout(() => {
+        wait = false
+      }, delay)
     }
   }
   return { throttle }

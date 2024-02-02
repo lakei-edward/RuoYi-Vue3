@@ -7,7 +7,7 @@
 </template>
 <script setup lang="tsx">
 import Test from './test/test.vue'
-import Child from './test/child'
+import Child from './child'
 import { ref } from 'vue'
 const show = ref('werwer')
 </script>

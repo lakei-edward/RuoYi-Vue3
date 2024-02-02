@@ -1,30 +1,19 @@
 <template>
-  <div>{{ form }}</div>
+  <div>{{ props.message }}</div>
+  <div>{{ show }}</div>
 </template>
 
 <script setup lang="ts">
-import { isProxy, isReactive, isReadonly, onMounted, reactive, readonly, toRefs } from 'vue'
+import { toRef, toRefs } from 'vue'
 
-// API call
-const getArticleInfo = async () => {
-  await new Promise(resolve => setTimeout(resolve, 300))
-  const article = {
-    title: 'Vue3 中使用 defineAsyncComponent 延迟加载组件',
-    author: 'lio'
-  }
-  return article
-}
-
-let state = reactive({
-  form: {},
-  arr: []
+const props = defineProps({
+  message: {
+    type: String
+  },
+  show: String
 })
-const copy = readonly(state)
 
-const { form } = toRefs(state)
-
-onMounted(async () => {
-  const data = await getArticleInfo()
-  state.form = data
-})
+// const show = toRefs(props)
+const show = toRef(props, 'show')
+console.log('🚀 ~ show:', show)
 </script>
