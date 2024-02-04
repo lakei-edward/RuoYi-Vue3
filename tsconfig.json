@@ -16,6 +16,7 @@
     "jsxImportSource": "vue",
     "allowJs": true,
     "noImplicitAny": false, // 是否在表达式和声明上有隐含的any类型时报错
+    "types": ["vite/client"], // “ImportMeta”上不存在属性“env”
 
     /* Linting */
     "strict": true,

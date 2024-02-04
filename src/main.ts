@@ -16,6 +16,10 @@ import store from './store'
 import router from './router'
 import directive from './directive' // directive
 
+// 若依页面分层工具
+import ryLayerPage from '@/packages/index.js'
+import request from '@/utils/request'
+
 // 注册指令
 import plugins from './plugins' // plugins
 import { download } from '@/utils/request'
@@ -68,12 +72,20 @@ app.component('ImageUpload', ImageUpload)
 app.component('ImagePreview', ImagePreview)
 app.component('RightToolbar', RightToolbar)
 app.component('Editor', Editor)
+app.component('svg-icon', SvgIcon)
 
 app.use(router)
 app.use(store)
 app.use(plugins)
 app.use(elementIcons)
-app.component('svg-icon', SvgIcon)
+app.use(ryLayerPage, {
+  http: request
+  // dict: getDicts,
+  // dictField: {
+  //   dictLabel: 'label',
+  //   dictValue: 'value'
+  // }
+})
 
 directive(app)
 

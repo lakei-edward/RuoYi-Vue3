@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    {{ down.count }}
     <el-row :gutter="20">
       <!--部门数据-->
       <el-col :span="4" :xs="24">
