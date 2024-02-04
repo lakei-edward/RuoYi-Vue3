@@ -21,7 +21,7 @@
     />
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="FormTextarea">
 import { computed, toRefs } from 'vue'
 
 const props = defineProps({

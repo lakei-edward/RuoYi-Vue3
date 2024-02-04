@@ -1,4 +1,6 @@
-// cover some element-ui styles
+.el-card {
+  border: none;
+} // cover some element-ui styles
 .login {
   input {
     border: 0px;
@@ -131,4 +133,7 @@
   .el-switch__core .el-switch__action {
     color: #000;
   }
+}
+.el-card {
+  border: none !important;
 }

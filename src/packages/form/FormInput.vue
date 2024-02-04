@@ -22,12 +22,12 @@
       @focus="focus ? focus(form, ikey) : ''"
     />
     <el-button v-if="isPhoneCode" @click="sendCode" :disabled="setDisabled">
-      <template v-if="!isSend"> 发送验证码 </template>
+      <template v-if="!isSend"> {{ sendTitle }} </template>
       <template v-else> {{ fre }}</template>
     </el-button>
   </span>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="FormInput">
 import useCurrentInstance from '@/hooks/useCurrentInstance'
 import { computed, onMounted, onUnmounted, ref, toRefs } from 'vue'
 import REGEXP from '../plugin/regExp'
@@ -50,6 +50,10 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: '请输入'
+  },
+  sendTitle: {
+    type: String,
+    default: '发送验证码'
   },
   size: {
     type: String

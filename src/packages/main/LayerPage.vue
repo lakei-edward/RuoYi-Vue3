@@ -2,187 +2,183 @@
   <div class="app-container">
     <!-- 主页面 -->
     <template v-if="!pageVisible">
-      {{ formList }}
       <!-- 查询 -->
-      <el-form
-        v-if="Object.keys(searchLayer).length > 0"
-        v-show="showSearch"
-        ref="formList"
-        :model="formList"
-        :inline="$isDeTrue(searchLayer.inline)"
-        :label-position="searchLayer.labelPosition"
-        :label-width="searchLayer.labelWidth"
-        :show-message="searchLayer.showMessage"
-        :inline-message="searchLayer.inlineMessage"
-        :status-icon="searchLayer.statusIcon"
-        :size="searchLayer.size"
-        :disabled="searchLayer.disabled"
-        :hide-required-asterisk="searchLayer.hideRequiredAsterisk"
-        :validate-on-rule-change="searchLayer.validateOnRuleChange"
-      >
-        <template v-for="item in searchLayer.form">
-          <!-- 单表单组件 -->
-          <el-form-item
-            v-if="$judgeTypeCom(item.component, item.hidden)"
-            :key="item.label"
-            :label-width="item.labelWidth"
-            :required="item.required"
-            :show-message="item.showMessage"
-            :prop="item.model"
-            :size="item.size"
-            :rules="item.rules ? item.rules : []"
-            :label="$setLabel(item.label, searchLayer.labelAfter)"
-          >
-            <Attr
-              :operateType="_getSearchLayer"
-              :formParams="formList"
-              :attrs="item"
-              :ref="item.component + '_search'"
-              :formWidth="searchLayer.formWidth"
-              :fatherSonInteraction="fatherSonInteraction"
-            ></Attr>
-          </el-form-item>
-          <!-- 自定组件 -->
-          <component
-            v-if="$isFunction(item.component)"
-            v-bind="$attrs"
-            :is="item.component"
-            :key="item.name"
-            :params="formList"
-            :model="item.model"
-            :noRule="$isDeTrue(item.noRule)"
-          />
-        </template>
-        <el-form-item>
-          <el-button type="primary" :size="searchLayer.operateSize" @click="handleQuery">
-            {{ searchLayer.searchName ? searchLayer.searchName : '搜索' }}
-          </el-button>
-          <el-button :size="searchLayer.operateSize" @click="resetForm">
-            {{ searchLayer.resetName ? searchLayer.resetName : '重置' }}
-          </el-button>
-        </el-form-item>
-      </el-form>
-      <!-- 操作按钮 -->
-      <el-row v-if="!_isOperateLayer" :gutter="10" class="mb8">
-        <el-col :span="1.5" v-if="_isHaveObject(operateLayer)">
-          <template v-for="(value, key) in operateLayer">
-            <el-button
-              v-if="value.show !== 'table'"
-              :key="key"
-              v-hasPermi="value.hasPermi ? [value.hasPermi] : []"
-              :size="value.size"
-              :type="value.type"
-              :circle="value.circle"
-              :round="value.round"
-              :plain="value.plain"
-              :loading="value.loading"
-              :icon="value.icon"
-              :autofocus="value.autofocus"
-              :disabled="_setDisabled(value)"
-              @click="handleOperation(value, key)"
-            >
-              {{ value.label }}
-            </el-button>
-          </template>
-        </el-col>
-        <right-toolbar
-          v-if="rightToolbar"
-          :show-search.sync="showSearch"
-          @queryTable="handleQuery"
-          @querylist="queryList"
-        />
-      </el-row>
-      <!-- 表格 -->
-      <div class="shuke-table-con" v-loading="loading ? tableLoad : false">
-        <el-table
-          ref="multipleTable"
-          :data="tableData"
-          :tooltip-effect="displayLayer.tooltipEffect || 'dark'"
-          :stripe="displayLayer.stripe"
-          :border="displayLayer.border"
-          :size="displayLayer.size"
-          :show-header="displayLayer.showHeader"
-          :highlight-current-row="displayLayer.highlightCurrentRow"
-          :max-height="displayLayer.maxHeight"
-          :height="displayLayer.height"
-          :header-cell-style="displayLayer.headerCellStyle"
-          :cell-style="displayLayer.cellStyle"
-          :row-key="displayLayer.key"
-          :empty-text="displayLayer.emptyText"
-          @row-click="rowClcik"
-          @row-dblclick="dblclick"
-          @selection-change="handleSelectionChange"
+      <el-card v-if="Object.keys(searchLayer).length > 0 && showSearch" shadow="never" style="margin-bottom: 20px">
+        <el-form
+          ref="formList"
+          :model="formList"
+          :inline="$isDeTrue(searchLayer.inline)"
+          :label-position="searchLayer.labelPosition"
+          :label-width="searchLayer.labelWidth"
+          :show-message="searchLayer.showMessage"
+          :inline-message="searchLayer.inlineMessage"
+          :status-icon="searchLayer.statusIcon"
+          :size="searchLayer.size"
+          :disabled="searchLayer.disabled"
+          :hide-required-asterisk="searchLayer.hideRequiredAsterisk"
+          :validate-on-rule-change="searchLayer.validateOnRuleChange"
         >
-          <el-table-column v-if="displayLayer.selection !== false" type="selection" />
-          <el-table-column v-if="displayLayer.index" type="index" :label="displayLayer.index"> </el-table-column>
-          <el-table-column
-            v-for="item in displayLayer.data"
-            :key="item.prop"
-            :prop="item.prop"
-            :label="item.label"
-            :width="item.width"
-            :min-width="item.minWidth"
-            :fixed="item.fixed"
-            :formatter="item.formatter"
-            :align="item.align"
-            :class-name="item.className"
-            :label-class-name="item.labelClassName"
-            :show-overflow-tooltip="$isDeTrue(item.showOverflowTooltip)"
-          >
-            <template slot-scope="scope">
-              <!-- 操作列 -->
-              <template v-if="item.operate && _isHaveObject(operateLayer)">
-                <template v-for="(value, key) in operateLayer">
-                  <el-button
-                    v-if="judgeShowTable(value, scope.row)"
-                    :key="key"
-                    v-hasPermi="value.hasPermi ? [value.hasPermi] : []"
-                    :size="value.size"
-                    :type="value.type || 'text'"
-                    :circle="value.circle"
-                    :round="value.round"
-                    :plain="value.plain"
-                    :loading="value.loading"
-                    :icon="value.icon"
-                    :autofocus="value.autofocus"
-                    :disabled="_setDisabled(value, scope.row)"
-                    @click="handleOperation(value, key, scope.row)"
-                  >
-                    {{ value.label }}
-                  </el-button>
-                </template>
-              </template>
-              <template v-else>
-                <!-- 自定义表格内组件 el-tag -->
-                <template v-if="item.component">
-                  <component
-                    :is="item.component.element"
-                    :attr="getTableAttr(item, scope.row)"
-                    :callback="item.callback"
-                    :row="scope.row"
-                    :prop="item.prop"
-                  ></component>
-                </template>
-                <!-- 自定义表格内组件 el-tag -->
-                <template v-else>
-                  <!-- 回调函数展示表格内容的数据 -->
-                  <template v-if="$isFunction(item.callback)">{{ item.callback(scope.row) }}</template>
-                  <!-- 直接展示 -->
-                  <template v-else>{{ scope.row[item.prop] }}</template>
-                </template>
-              </template>
+          <template v-for="item in searchLayer.form">
+            <!-- 单表单组件 -->
+            <el-form-item
+              v-if="$judgeTypeCom(item.component, item.hidden)"
+              :key="item.label"
+              :label-width="item.labelWidth"
+              :required="item.required"
+              :show-message="item.showMessage"
+              :prop="item.model"
+              :size="item.size"
+              :rules="item.rules ? item.rules : []"
+              :label="$setLabel(item.label, searchLayer.labelAfter)"
+            >
+              <Attr
+                :operateType="_getSearchLayer"
+                :formParams="formList"
+                :attrs="item"
+                :ref="item.component + '_search'"
+                :formWidth="searchLayer.formWidth"
+                :fatherSonInteraction="fatherSonInteraction"
+              ></Attr>
+            </el-form-item>
+            <!-- 自定组件 -->
+            <component
+              v-if="$isFunction(item.component)"
+              v-bind="$attrs"
+              :is="item.component"
+              :key="item.name"
+              :params="formList"
+              :model="item.model"
+              :noRule="$isDeTrue(item.noRule)"
+            />
+          </template>
+          <el-form-item>
+            <el-button type="primary" :size="searchLayer.operateSize" @click="handleQuery">
+              {{ searchLayer.searchName ? searchLayer.searchName : '搜索' }}
+            </el-button>
+            <el-button :size="searchLayer.operateSize" @click="resetForm">
+              {{ searchLayer.resetName ? searchLayer.resetName : '重置' }}
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+
+      <el-card shadow="never">
+        <!-- 操作按钮 -->
+        <el-row v-if="!_isOperateLayer || rightToolbar" :gutter="10" class="mb8">
+          <el-col :span="1.5" v-if="_isHaveObject(operateLayer)">
+            <template v-for="(value, key) in operateLayer">
+              <el-button
+                v-if="value.show !== 'table'"
+                :key="key"
+                v-hasPermi="value.hasPermi ? [value.hasPermi] : ['*:*:*']"
+                :size="value.size"
+                :type="value.type"
+                :circle="value.circle"
+                :round="value.round"
+                :plain="value.plain"
+                :loading="value.loading"
+                :icon="value.icon"
+                :autofocus="value.autofocus"
+                :disabled="_setDisabled(value)"
+                @click="handleOperation(value, key)"
+              >
+                {{ value.label }}
+              </el-button>
             </template>
-          </el-table-column>
-        </el-table>
-        <!-- 分页 -->
-        <pagination
-          v-show="listTotal > 0"
-          :total="listTotal"
-          :page.sync="formList.pageNum"
-          :limit.sync="formList.pageSize"
-          @pagination="queryList"
-        />
-      </div>
+          </el-col>
+          <right-toolbar v-if="rightToolbar" v-model:showSearch="showSearch" @queryTable="queryList"></right-toolbar>
+        </el-row>
+        <!-- 表格 -->
+        <div class="shuke-table-con" v-loading="loading ? tableLoad : false">
+          <el-table
+            ref="multipleTable"
+            :data="tableData"
+            :tooltip-effect="displayLayer.tooltipEffect || 'dark'"
+            :stripe="displayLayer.stripe"
+            :border="displayLayer.border"
+            :size="displayLayer.size"
+            :show-header="displayLayer.showHeader"
+            :highlight-current-row="displayLayer.highlightCurrentRow"
+            :max-height="displayLayer.maxHeight"
+            :height="displayLayer.height"
+            :header-cell-style="displayLayer.headerCellStyle"
+            :cell-style="displayLayer.cellStyle"
+            :row-key="displayLayer.key"
+            :empty-text="displayLayer.emptyText"
+            @row-click="rowClcik"
+            @row-dblclick="dblclick"
+            @selection-change="handleSelectionChange"
+          >
+            <el-table-column v-if="displayLayer.selection !== false" type="selection" />
+            <el-table-column v-if="displayLayer.index" type="index" :label="displayLayer.index"> </el-table-column>
+            <el-table-column
+              v-for="item in displayLayer.data"
+              :key="item.prop"
+              :prop="item.prop"
+              :label="item.label"
+              :width="item.width"
+              :min-width="item.minWidth"
+              :fixed="item.fixed"
+              :formatter="item.formatter"
+              :align="item.align"
+              :class-name="item.className"
+              :label-class-name="item.labelClassName"
+              :show-overflow-tooltip="$isDeTrue(item.showOverflowTooltip)"
+            >
+              <template #default="scope">
+                <!-- 操作列 -->
+                <template v-if="item.operate && _isHaveObject(operateLayer)">
+                  <template v-for="(value, key) in operateLayer">
+                    <el-button
+                      v-if="judgeShowTable(value, scope.row)"
+                      :key="key"
+                      v-hasPermi="value.hasPermi ? [value.hasPermi] : ['*:*:*']"
+                      :size="value.size"
+                      :type="value.type || 'text'"
+                      :circle="value.circle"
+                      :round="value.round"
+                      :plain="value.plain"
+                      :loading="value.loading"
+                      :icon="value.icon"
+                      :autofocus="value.autofocus"
+                      :disabled="_setDisabled(value, scope.row)"
+                      @click="handleOperation(value, key, scope.row)"
+                    >
+                      {{ value.label }}
+                    </el-button>
+                  </template>
+                </template>
+                <template v-else>
+                  <!-- 自定义表格内组件 el-tag -->
+                  <template v-if="item.component">
+                    <component
+                      :is="item.component.element"
+                      :attr="getTableAttr(item, scope.row)"
+                      :callback="item.callback"
+                      :row="scope.row"
+                      :prop="item.prop"
+                    ></component>
+                  </template>
+                  <!-- 自定义表格内组件 el-tag -->
+                  <template v-else>
+                    <!-- 回调函数展示表格内容的数据 -->
+                    <template v-if="$isFunction(item.callback)">{{ item.callback(scope.row) }}</template>
+                    <template v-else>{{ scope.row[item.prop] }}</template>
+                  </template>
+                </template>
+              </template>
+            </el-table-column>
+          </el-table>
+          <!-- 分页 -->
+          <pagination
+            v-show="listTotal > 0"
+            :total="listTotal"
+            :page.sync="formList.pageNum"
+            :limit.sync="formList.pageSize"
+            @pagination="queryList"
+          />
+        </div>
+      </el-card>
 
       <!-- 增改查弹框以及其他弹框 -->
       <template v-if="_judgeDialog && dialogAddVisible">
@@ -991,28 +987,19 @@ export default {
         pageSize: this.pageSize
       }
       // 重置清除dataRange数据
-      const dataRangeType = this.$refs['FormDateRange_search']
+      const dataRangeType = this.$refs['FormDate_search']
+      console.log(dataRangeType)
       if (dataRangeType && dataRangeType.length > 0) {
         dataRangeType.forEach(item => {
+          console.log(item.value)
           item.$children[0].dateTime = []
         })
-      }
-      // 清空子组件字段dateTime
-      if (this.$refs.FormDateRange) {
-        // 日期选择清空
-        if (this.$refs.FormDateRange) {
-          Array.from(this.$refs.FormDateRange, e => {
-            e.dateTime = []
-          })
-        }
       }
       this.queryList()
     },
 
     // 选中当前的行
     rowClcik(row, column) {
-      // console.log("源码:")
-      // console.log(row,column)
       if (column.property === 'operate') {
         return
       } else {

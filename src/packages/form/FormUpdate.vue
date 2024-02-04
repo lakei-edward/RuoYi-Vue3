@@ -50,14 +50,14 @@
     </el-upload>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="FormUpdate">
 import { computed, inject, onUnmounted, ref, toRefs, watch } from 'vue'
 import useCurrentInstance from '@/hooks/useCurrentInstance'
 const { proxy } = useCurrentInstance()
 
 const defaultTextLabel = ref('请上传 大小不超过 10MB 格式为 doc/docx/xls/xlsx/txt/pdf/jpg/png 的文件')
 const fileIdList = ref<Array<string>>([])
-const uploadRef = ref(null)
+const uploadRef = ref()
 
 const props = defineProps({
   form: {
@@ -169,13 +169,13 @@ function uploadSuccess(file) {
       }
     }
     if (refForms) {
+      // @ts-ignore
       const reff = refForms()
       reff && reff.validateField(model!.value)
     }
     proxy.$modal.msgSuccess(file.msg || '上传成功')
   } else {
     proxy.$modal.msgError(file.msg || '上传失败')
-    uploadRef.value.upload.uploadFiles.pop()
   }
 }
 

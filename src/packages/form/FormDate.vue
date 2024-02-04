@@ -21,7 +21,7 @@
   >
   </el-date-picker>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="FormDate">
 import { computed, onUnmounted, ref, toRefs } from 'vue'
 
 const props = defineProps({

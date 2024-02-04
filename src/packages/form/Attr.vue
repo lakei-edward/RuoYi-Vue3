@@ -1,6 +1,7 @@
 <template>
   <component
     :is="c"
+    :ref="attrs.component"
     :form="formParams"
     :form-width="formWidth"
     :type="attrs.type"
@@ -78,11 +79,15 @@
     :textModel="attrs.textModel"
     :shortcuts="attrs.shortcuts"
     :disabledDate="attrs.disabledDate"
+    :valueKey="attrs.valueKey"
+    :dataProps="attrs.dataProps"
+    :showCheckbox="attrs.showCheckbox"
+    :sendTitle="attrs.sendTitle"
     :fatherSonInteraction="fatherSonInteraction"
     :operateType="operateType"
   />
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="Attr">
 import { ref, toRefs, watch } from 'vue'
 const props = defineProps({
   attrs: {

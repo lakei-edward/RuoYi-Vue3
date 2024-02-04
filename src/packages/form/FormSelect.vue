@@ -15,7 +15,7 @@
     <el-option v-for="option in dict" :key="option[keyModel]" :label="option.label" :value="setValue(option)" />
   </el-select>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="FormSelect">
 import { computed, toRefs } from 'vue'
 
 interface Dict {

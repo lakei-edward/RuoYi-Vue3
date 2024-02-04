@@ -369,7 +369,7 @@
   </div>
 </template>
 
-<script setup name="User" lang="ts">
+<script setup name="User">
 import { getToken } from '@/utils/auth'
 import {
   changeUserStatus,
