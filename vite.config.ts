@@ -28,6 +28,7 @@ export default defineConfig(({ mode, command }) => {
     server: {
       port: 80,
       host: true,
+      hmr: true, // 热更新
       open: true,
       proxy: {
         // https://cn.vitejs.dev/config/#server-proxy

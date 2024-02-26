@@ -1,19 +1,16 @@
 <template>
-  <div>{{ props.message }}</div>
-  <div>{{ show }}</div>
+  <div>{{ msg }}</div>
 </template>
 
 <script setup lang="ts">
-import { toRef, toRefs } from 'vue'
+import { ref } from 'vue'
+let msg = ref('This is a TSX component in Vue 3!')
 
-const props = defineProps({
-  message: {
-    type: String
-  },
-  show: String
+function setMsg() {
+  msg.value = '123'
+}
+defineExpose({
+  msg,
+  setMsg
 })
-
-// const show = toRefs(props)
-const show = toRef(props, 'show')
-console.log('🚀 ~ show:', show)
 </script>

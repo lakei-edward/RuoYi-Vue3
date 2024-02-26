@@ -2,7 +2,7 @@
   <div
     class="sidebar-logo-container"
     :class="{ collapse: collapse }"
-    :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }"
+    v-toggleTheme="[variables.menuBackgroundDark, variables.menuBackground]"
   >
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
@@ -32,7 +32,6 @@
 import variables from '@/assets/styles/variables.module.scss'
 import logo from '@/assets/logo/logo.png'
 import useSettingsStore from '@/store/modules/settings'
-
 defineProps({
   collapse: {
     type: Boolean,

@@ -3,10 +3,9 @@
  * Copyright (c) 2022 ruoyi
  */
 
-import { onBeforeUnmount, toValue } from 'vue'
 import { ElMessage } from 'element-plus'
 export default {
-  mounted(el, { value, arg, modifiers }) {
+  mounted(el, { value, arg }) {
     el.$arg = arg || 'success'
     el.$value = value
     el.handler = () => {
@@ -39,7 +38,7 @@ export default {
   updated(el, { value }) {
     el.$value = value
   },
-  beforeUnmount(el, { value, arg }) {
+  beforeUnmount(el) {
     el.removeEventListener('dblclick', el.handler)
   }
 }

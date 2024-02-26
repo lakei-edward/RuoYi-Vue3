@@ -9,25 +9,14 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!settingsStore.topNav" />
     <top-nav id="topmenu-container" class="topmenu-container" v-if="settingsStore.topNav" />
 
-    <div class="right-menu flex items-center">
+    <div class="right-menu flex items-center" style="font-size: 22px">
       <template v-if="appStore.device !== 'mobile'">
-        <header-search id="header-search" class="right-menu-item flex items-center" />
+        <header-search class="mr-4 cursor-pointer" />
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        <screenfull class="mr-4 cursor-pointer" />
 
-        <el-tooltip content="布局大小" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item flex items-center hover-effect" />
-        </el-tooltip>
-
-        <!-- <el-switch v-model="isDark" @change="toggleDark">
-          <template #active-action>
-            <span class="custom-active-action">123123</span>
-          </template>
-          <template #inactive-action>
-            <span class="custom-inactive-action">F123123123</span>
-          </template>
-        </el-switch> -->
-        <dark-toggle></dark-toggle>
+        <size-select class="mr-4 cursor-pointer" />
+        <dark-toggle class="mr-4 cursor-pointer" />
       </template>
 
       <div class="avatar-container flex a-c">

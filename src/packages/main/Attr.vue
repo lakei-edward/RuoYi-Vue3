@@ -1,7 +1,7 @@
 <template>
   <component
+    ref="attrRefs"
     :is="c"
-    :ref="attrs.component"
     :form="formParams"
     :form-width="formWidth"
     :type="attrs.type"
@@ -107,13 +107,18 @@ const props = defineProps({
 const { attrs } = toRefs(props)
 
 const c = ref('')
+const attrRefs = ref()
 
 watch(
   () => attrs.value.component,
   async val => {
-    const v = await import(`./${val}.vue`)
+    const v = await import(`../form/${val}.vue`)
     c.value = v.default
   },
   { immediate: true }
 )
+
+defineExpose({
+  attrRefs
+})
 </script>

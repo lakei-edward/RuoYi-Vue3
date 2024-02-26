@@ -7,13 +7,18 @@
       :display-layer="displayLayer"
       :rightToolbar="false"
     />
+    <ChoosePerson ref="ChoosePersonRef" :multiple="true"></ChoosePerson>
   </div>
 </template>
-<script setup lang="tsx">
+<script setup lang="ts">
+import ChoosePerson from '@/packages/components/ChoosePerson.vue'
 import useCurrentInstance from '@/hooks/useCurrentInstance'
 import { ref } from 'vue'
 
+const ChoosePersonRef = ref()
+
 const { proxy } = useCurrentInstance()
+
 const { sys_yes_no, xshc_blfs, xshc_cljy, xshc_cbdcjg } = proxy.useDict(
   `xshc_xsly`,
   `xshc_zdxsfl`,
@@ -113,6 +118,16 @@ const formListOther = [
 ]
 let allSearchForm = [...formListOther]
 
+//在自定义查询事件中，将params的值添加一个属性
+//这里的params与LayerPage子组件的params引用的是同一个变量地址
+function searchCallback(params) {
+  params.wtxz = params.wtxz && params.wtxz.join(',')
+}
+
+function downloadFile() {
+  ChoosePersonRef.value.init()
+}
+
 const searchLayer = ref({
   searchName: '查询',
   resetName: '重置',
@@ -121,13 +136,6 @@ const searchLayer = ref({
   //自定义搜索事件
   beforeSearch: searchCallback
 })
-
-//在自定义查询事件中，将params的值添加一个属性
-//这里的params与LayerPage子组件的params引用的是同一个变量地址
-function searchCallback(params) {
-  params.wtxz = params.wtxz && params.wtxz.join(',')
-}
-
 const operateLayer = ref({
   search: {
     size: 'mini',
@@ -137,16 +145,8 @@ const operateLayer = ref({
     method: 'get',
     url: `${BASE_URL}/getXshcDetail`,
     mode: {
-      type: 'RouterPage',
-      detail: true,
-      router: {
-        path: '/xscx/search/index/',
-        query: {
-          mode: 'search',
-          type: 'xscx',
-          row_status: ''
-        }
-      }
+      type: 'CustomOperate',
+      click: downloadFile
     }
   }
 })
@@ -201,3 +201,4 @@ const displayLayer = ref({
   ]
 })
 </script>
+<style lang="scss"></style>

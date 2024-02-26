@@ -326,7 +326,7 @@
 <script>
 import Tag from '../common/Tag.vue'
 import Avatar from '../common/Avatar.vue'
-import Attr from '../form/Attr.vue'
+import Attr from './Attr.vue'
 import mixins from '../plugin/mixin'
 import { download } from '../plugin/download'
 import { isDef, isTypes, deepClone, handleDicts, judgeType } from '../plugin/util.js'
@@ -842,7 +842,6 @@ export default {
      * @param {row}  & 当操作按钮在表格中时，传入的当前行信息,否则为false
      */
     handleComfirm(item, row, key) {
-      // console.log(row)
       // 这里判断是不是行内操作
       let t_row = row ? [row] : this.sections
       if (!item.mode.subscribe) {
@@ -988,11 +987,9 @@ export default {
       }
       // 重置清除dataRange数据
       const dataRangeType = this.$refs['FormDate_search']
-      console.log(dataRangeType)
       if (dataRangeType && dataRangeType.length > 0) {
         dataRangeType.forEach(item => {
-          console.log(item.value)
-          item.$children[0].dateTime = []
+          item.attrRefs.clearDateTime()
         })
       }
       this.queryList()

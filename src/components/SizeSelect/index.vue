@@ -1,23 +1,19 @@
 <template>
-  <div>
-    <el-dropdown trigger="click" @command="handleSetSize">
-      <div class="size-icon--style">
-        <svg-icon class-name="size-icon" icon-class="size" />
-      </div>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item
-            v-for="item of sizeOptions"
-            :key="item.value"
-            :disabled="size === item.value"
-            :command="item.value"
-          >
-            {{ item.label }}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
-  </div>
+  <el-dropdown trigger="click" @command="handleSetSize">
+    <el-icon style="font-size: 22px"><Operation /></el-icon>
+    <template #dropdown>
+      <el-dropdown-menu>
+        <el-dropdown-item
+          v-for="item of sizeOptions"
+          :key="item.value"
+          :disabled="size === item.value"
+          :command="item.value"
+        >
+          {{ item.label }}
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </template>
+  </el-dropdown>
 </template>
 
 <script setup>
@@ -41,10 +37,4 @@ function handleSetSize(size) {
 }
 </script>
 
-<style lang="scss" scoped>
-.size-icon--style {
-  font-size: 18px;
-  line-height: 50px;
-  padding-right: 7px;
-}
-</style>
+<style lang="scss" scoped></style>

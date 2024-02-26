@@ -1,7 +1,9 @@
 <template>
-  <div :class="{ show: show }" class="header-search">
-    <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
+  <div class="flex items-center">
+    <el-icon @click.stop="click"><Search /></el-icon>
     <el-select
+      v-if="show"
+      style="width: 210px"
       ref="headerSearchSelectRef"
       v-model="search"
       :remote-method="querySearch"
@@ -9,7 +11,6 @@
       default-first-option
       remote
       placeholder="Search"
-      class="header-search-select"
       @change="change"
     >
       <el-option
@@ -158,8 +159,6 @@ watch(searchPool, list => {
 
 <style lang="scss" scoped>
 .header-search {
-  font-size: 0 !important;
-
   .search-icon {
     cursor: pointer;
     font-size: 18px;
@@ -184,13 +183,6 @@ watch(searchPool, list => {
       box-shadow: none !important;
       border-bottom: 1px solid #d9d9d9;
       vertical-align: middle;
-    }
-  }
-
-  &.show {
-    .header-search-select {
-      width: 210px;
-      margin-left: 10px;
     }
   }
 }

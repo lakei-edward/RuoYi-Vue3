@@ -148,4 +148,14 @@ function changeDate(val) {
     }
   }
 }
+
+/* 清除v-model副作用 */
+function clearDateTime() {
+  dateTime.value = []
+}
+
+defineExpose({
+  dateTime,
+  clearDateTime
+})
 </script>

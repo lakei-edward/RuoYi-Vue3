@@ -1,14 +1,14 @@
 <template>
-  <div id="tags-view-container" class="tags-view-container">
+  <div id="tags-view-container" class="tags-view-container" v-toggleTheme.borderColor="['#474747', '#d8dce5']">
     <scroll-pane ref="scrollPaneRef" class="tags-view-wrapper" @scroll="handleScroll">
       <router-link
         v-for="tag in visitedViews"
         :key="tag.path"
         :data-path="tag.path"
         :class="isActive(tag) ? 'active' : ''"
+        v-toggleTheme.borderColor="['#474747', '#d8dce5']"
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         class="tags-view-item"
-        :style="activeStyle(tag)"
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
         @contextmenu.prevent="openMenu(tag, $event)"
       >
@@ -236,7 +236,7 @@ function handleScroll() {
   height: 34px;
   width: 100%;
   // background: #fff;
-  border-bottom: 1px solid #d8dce5;
+  border-bottom: 1px solid;
   box-shadow:
     0 1px 3px 0 rgba(0, 0, 0, 0.12),
     0 0 3px 0 rgba(0, 0, 0, 0.04);
@@ -247,7 +247,7 @@ function handleScroll() {
       cursor: pointer;
       height: 26px;
       line-height: 26px;
-      border: 1px solid #d8dce5;
+      border: 1px solid;
       // color: #495060;
       // background: #fff;
       padding: 0 8px;
@@ -261,19 +261,22 @@ function handleScroll() {
         margin-right: 15px;
       }
       &.active {
-        background-color: #42b983;
-        color: #fff;
-        border-color: #42b983;
-        &::before {
-          content: '';
-          background: #fff;
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          position: relative;
-          margin-right: 5px;
-        }
+        // font-size: 20px;
+        font-weight: 700;
+        color: #409eff;
+        // background-color: #42b983;
+        // color: #fff;
+        // border-color: #42b983;
+        // &::before {
+        //   content: '';
+        //   // background: #fff;
+        //   display: inline-block;
+        //   width: 8px;
+        //   height: 8px;
+        //   border-radius: 50%;
+        //   position: relative;
+        //   margin-right: 5px;
+        // }
       }
     }
   }

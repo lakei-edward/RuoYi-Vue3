@@ -1,5 +1,7 @@
 <template>
-  <section class="app-main">
+  <!-- <section class="app-main" :style="{ background: isDark ? '#000' : '#F5F7FA' }"> -->
+  <section class="app-main" v-toggleTheme="['#000', '#F5F7FA']">
+    <!-- <section class="app-main" v-toggleTheme="['#F5F7FA', '#000']"> -->
     <router-view v-slot="{ Component, route }">
       <transition name="fade-transform" mode="out-in">
         <keep-alive :include="tagsViewStore.cachedViews">
@@ -25,7 +27,6 @@ const tagsViewStore = useTagsViewStore()
   width: 100%;
   position: relative;
   overflow: hidden;
-  background: #f8f8f8;
 }
 
 .fixed-header + .app-main {
@@ -45,24 +46,9 @@ const tagsViewStore = useTagsViewStore()
 </style>
 
 <style lang="scss">
-// fix css style bug in open el-dialog
 .el-popup-parent--hidden {
   .fixed-header {
     padding-right: 6px;
   }
 }
-
-// ::-webkit-scrollbar {
-//   width: 6px;
-//   height: 6px;
-// }
-
-// ::-webkit-scrollbar-track {
-//   background-color: #f1f1f1;
-// }
-
-// ::-webkit-scrollbar-thumb {
-//   background-color: #c0c0c0;
-//   border-radius: 3px;
-// }
 </style>

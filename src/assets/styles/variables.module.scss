@@ -8,36 +8,20 @@ $tiffany: #4ab7bd;
 $yellow: #fec171;
 $panGreen: #30b08f;
 
-// 默认菜单主题风格
-// $base-menu-color: #bfcbd9;
-// $base-menu-color-active: #f4f4f5;
-// $base-menu-background: #304156;
-$base-menu-color: #fee;
-$base-menu-color-active: #ffffff;
+/* light */
+$base-menu-color: #f5f7fa;
+$base-menu-color-active: #fff;
 $base-menu-background: #0d7ada;
-$base-logo-title-color: #ffffff;
+$base-logo-title-color: #fff;
+$base-sub-menu-background-light: #1a68d6;
+$base-sub-menu-hover-light: #078bfc;
 
-$base-menu-light-color: rgba(0, 0, 0, 0.7);
-$base-menu-light-background: #ffffff;
-$base-logo-light-title-color: #fff;
+/* dark */
 
-$base-sub-menu-background: #1a68d6;
-$base-sub-menu-hover: #078bfc;
-
-// 自定义暗色菜单风格
-/**
-$base-menu-color:hsla(0,0%,100%,.65);
-$base-menu-color-active:#fff;
-$base-menu-background:#001529;
-$base-logo-title-color: #ffffff;
-
-$base-menu-light-color:rgba(0,0,0,.70);
-$base-menu-light-background:#ffffff;
-$base-logo-light-title-color: #001529;
-
-$base-sub-menu-background:#000c17;
-$base-sub-menu-hover:#001528;
-*/
+$base-dark-menu-color: #e6e8eb;
+$base-dark-menu-background: #161d24;
+$base-sub-menu-background-dark: #111b2b;
+$base-sub-menu-hover-dark: #122638;
 
 $--color-primary: #409eff;
 $--color-success: #67c23a;
@@ -51,15 +35,12 @@ $base-sidebar-width: 240px;
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
   menuColor: $base-menu-color;
-  menuLightColor: $base-menu-light-color;
-  menuColorActive: $base-menu-color-active;
   menuBackground: $base-menu-background;
-  menuLightBackground: $base-menu-light-background;
-  subMenuBackground: $base-sub-menu-background;
-  subMenuHover: $base-sub-menu-hover;
+  menuColorDark: $base-dark-menu-color;
+  menuBackgroundDark: $base-dark-menu-background;
+  menuColorActive: $base-menu-color-active;
   sideBarWidth: $base-sidebar-width;
   logoTitleColor: $base-logo-title-color;
-  logoLightTitleColor: $base-logo-light-title-color;
   primaryColor: $--color-primary;
   successColor: $--color-success;
   dangerColor: $--color-danger;

@@ -1,17 +1,17 @@
 <template>
   <div
-    :class="{ 'has-logo': showLogo }"
-    :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }"
+    :class="[{ 'has-logo': showLogo }, isDark ? 'el-menu-item-dark' : 'el-menu-item-light']"
+    v-toggleTheme="[variables.menuBackgroundDark, variables.menuBackground]"
   >
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar :class="sideTheme" wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground"
-        :text-color="sideTheme === 'theme-dark' ? variables.menuColor : variables.menuLightColor"
+        :background-color="isDark ? variables.menuBackgroundDark : variables.menuBackground"
+        :text-color="isDark ? variables.menuColorDark : variables.menuColor"
         :unique-opened="true"
-        :active-text-color="theme"
+        :active-text-color="isDark ? variables.menuColorDark : variables.menuColor"
         :collapse-transition="false"
         mode="vertical"
       >
@@ -33,6 +33,8 @@ import variables from '@/assets/styles/variables.module.scss'
 import useAppStore from '@/store/modules/app'
 import useSettingsStore from '@/store/modules/settings'
 import usePermissionStore from '@/store/modules/permission'
+import { useDarkToggle } from '@/hooks/core.ts'
+const { isDark } = useDarkToggle()
 
 const route = useRoute()
 const appStore = useAppStore()

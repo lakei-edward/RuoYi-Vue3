@@ -47,7 +47,7 @@
 /**
  * 传入单个operateLayer，直接使用操作层的表单，不需要与整体的三层捆绑
  */
-import Attr from '../form/Attr.vue';
+import Attr from './Attr.vue';
 import mixins from '../plugin/mixin';
 import { handleDicts } from '../plugin/util.js';
 export default {

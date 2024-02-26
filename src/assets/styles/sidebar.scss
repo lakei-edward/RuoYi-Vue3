@@ -81,6 +81,12 @@
 
     .el-menu-item .el-menu-tooltip__trigger {
       display: inline-block !important;
+      // left: 50%;
+      // top: 50% !important;
+      // transform: translate(-50%, -50%) !important;
+      position: inherit !important;
+      height: auto !important;
+      padding: 0 !important;
     }
 
     // menu hover
@@ -103,13 +109,32 @@
         background-color: rgba(0, 0, 0, 0.06) !important;
       }
     }
-
-    & .theme-dark .nest-menu .el-sub-menu > .el-sub-menu__title,
+  }
+  .el-menu-item-light {
+    & .theme-dark .el-menu-item.is-active {
+      background-color: $base-sub-menu-hover-light !important;
+    }
+    & .theme-dark .el-sub-menu .el-menu-item.is-active {
+      background-color: $base-sub-menu-hover-light !important;
+    }
     & .theme-dark .el-sub-menu .el-menu-item {
-      background-color: $base-sub-menu-background !important;
-
+      background-color: $base-sub-menu-background-light !important;
       &:hover {
-        background-color: $base-sub-menu-hover !important;
+        background-color: $base-sub-menu-hover-light !important;
+      }
+    }
+  }
+  .el-menu-item-dark {
+    & .theme-dark .el-menu-item.is-active {
+      background-color: $base-sub-menu-hover-dark !important;
+    }
+    & .theme-dark .el-sub-menu .el-menu-item.is-active {
+      background-color: $base-sub-menu-hover-dark !important;
+    }
+    & .theme-dark .el-sub-menu .el-menu-item {
+      background-color: $base-sub-menu-background-dark !important;
+      &:hover {
+        background-color: $base-sub-menu-hover-dark !important;
       }
     }
   }
