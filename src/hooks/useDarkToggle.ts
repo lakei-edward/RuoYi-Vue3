@@ -7,8 +7,6 @@ import { useDark, useToggle } from '@vueuse/core'
 /** 暗黑模式切换 */
 export default function () {
   const isDark = useDark()
-  /* 暗黑模式切换 */
-
   async function toggleDark(event) {
     const x = event.clientX
     const y = event.clientY
@@ -50,3 +48,4 @@ export default function () {
     toggleDark
   }
 }
+
