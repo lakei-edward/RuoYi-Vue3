@@ -58,12 +58,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '',
+    path: '/',
     component: Layout,
-    redirect: '/index',
+    redirect: '/xcdc/preview',
     children: [
       {
-        path: '/index',
+        path: '/xcdc/preview',
         component: () => import('@/views/index'),
         name: 'Index',
         meta: { title: '首页', icon: 'dashboard', affix: true }
@@ -161,7 +161,7 @@ export const dynamicRoutes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory('/vue3/'),
+  history: createWebHistory(),
   routes: constantRoutes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

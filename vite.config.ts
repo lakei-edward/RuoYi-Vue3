@@ -3,6 +3,7 @@ import path from 'path'
 import createVitePlugins from './vite/plugins'
 import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
@@ -26,15 +27,17 @@ export default defineConfig(({ mode, command }) => {
     },
     // vite 相关配置
     server: {
-      port: 80,
+      port: 8888,
       host: true,
       hmr: true, // 热更新
       open: true,
+      cors: true,
+      origin: 'http://localhost:8888',
       proxy: {
         // https://cn.vitejs.dev/config/#server-proxy
         '/dev-api': {
           // target: 'http://localhost:8080',
-          target: 'http://192.168.20.111:8012',
+          target: 'http://192.168.20.111:8013',
           changeOrigin: true,
           rewrite: p => p.replace(/^\/dev-api/, '')
         }
@@ -42,6 +45,11 @@ export default defineConfig(({ mode, command }) => {
     },
     //fix:error:stdin>:7356:1: warning: "@charset" must be the first rule in the file
     css: {
+      // preprocessorOptions: {
+      //   scss: {
+      //     additionalData: `@use "@/styles/element/index.scss" as *;`
+      //   }
+      // },
       postcss: {
         plugins: [
           tailwindcss,

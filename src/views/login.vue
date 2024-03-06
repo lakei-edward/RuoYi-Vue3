@@ -160,6 +160,25 @@ getCode()
 getCookie()
 </script>
 
+<style lang="scss">
+.login {
+  input {
+    border: 0px;
+    color: #000;
+    background-color: transparent;
+    border-radius: 0px;
+    &:-webkit-autofill,
+    textarea:-webkit-autofill,
+    select:-webkit-autofill {
+      -webkit-text-fill-color: #000 !important;
+      -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+      background-color: transparent;
+      background-image: none;
+      transition: background-color 5000000s ease-in-out 0s; //背景色透明  生效时长  过渡效果  启用时延迟的时间
+    }
+  }
+}
+</style>
 <style lang="scss" scoped>
 .login {
   display: flex;

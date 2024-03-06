@@ -1,3 +1,5 @@
+import './public-path'
+
 import { createApp } from 'vue'
 
 import Cookies from 'js-cookie'
@@ -10,6 +12,9 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import locale from 'element-plus/es/locale/lang/zh-cn'
+
+// 修改ElementPlus命名空间引入
+// import '@/styles/index.scss'
 
 import App from './App.vue'
 import store from './store'
@@ -51,49 +56,69 @@ import TreeSelect from '@/components/TreeSelect/index.vue'
 // 字典标签组件
 import DictTag from '@/components/DictTag/index.vue'
 
-const app = createApp(App)
+import { renderWithQiankun, qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
+import useSettingsStore from '@/store/modules/settings'
 
-// 全局方法挂载
-app.config.globalProperties.useDict = useDict
-app.config.globalProperties.download = download
-app.config.globalProperties.parseTime = parseTime
-app.config.globalProperties.resetForm = resetForm
-app.config.globalProperties.handleTree = handleTree
-app.config.globalProperties.addDateRange = addDateRange
-app.config.globalProperties.selectDictLabel = selectDictLabel
-app.config.globalProperties.selectDictLabels = selectDictLabels
+function globalRegistry(app) {
+  // 全局方法挂载
+  app.config.globalProperties.useDict = useDict
+  app.config.globalProperties.download = download
+  app.config.globalProperties.parseTime = parseTime
+  app.config.globalProperties.resetForm = resetForm
+  app.config.globalProperties.handleTree = handleTree
+  app.config.globalProperties.addDateRange = addDateRange
+  app.config.globalProperties.selectDictLabel = selectDictLabel
+  app.config.globalProperties.selectDictLabels = selectDictLabels
 
-// 全局组件挂载
-app.component('DictTag', DictTag)
-app.component('Pagination', Pagination)
-app.component('TreeSelect', TreeSelect)
-app.component('FileUpload', FileUpload)
-app.component('ImageUpload', ImageUpload)
-app.component('ImagePreview', ImagePreview)
-app.component('RightToolbar', RightToolbar)
-app.component('Editor', Editor)
-app.component('svg-icon', SvgIcon)
+  // 全局组件挂载
+  app.component('DictTag', DictTag)
+  app.component('Pagination', Pagination)
+  app.component('TreeSelect', TreeSelect)
+  app.component('FileUpload', FileUpload)
+  app.component('ImageUpload', ImageUpload)
+  app.component('ImagePreview', ImagePreview)
+  app.component('RightToolbar', RightToolbar)
+  app.component('Editor', Editor)
+  app.component('svg-icon', SvgIcon)
 
-app.use(router)
-app.use(store)
-app.use(plugins)
-app.use(elementIcons)
-app.use(ryLayerPage, {
-  http: request
-  // dict: getDicts,
-  // dictField: {
-  //   dictLabel: 'label',
-  //   dictValue: 'value'
-  // }
-})
+  // 使用element-plus 并且设置全局的大小
+  app.use(ElementPlus, {
+    locale: locale,
+    // 支持 large、default、small
+    size: Cookies.get('size') || 'default'
+  })
+  app.use(router)
+  app.use(store)
+  app.use(plugins)
+  app.use(elementIcons)
+  app.use(ryLayerPage, {
+    http: request
+  })
 
-directive(app)
+  directive(app)
+}
 
-// 使用element-plus 并且设置全局的大小
-app.use(ElementPlus, {
-  locale: locale,
-  // 支持 large、default、small
-  size: Cookies.get('size') || 'default'
-})
-
-app.mount('#app')
+let microApp: any
+/* 独立打开时 */
+if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
+  const app = createApp(App)
+  // 全局方法挂载
+  globalRegistry(app)
+  app.mount('#app')
+} else {
+  /* 当作微应用时 */
+  renderWithQiankun({
+    mount(props) {
+      microApp = createApp(App)
+      // 全局方法挂载
+      globalRegistry(microApp)
+      const { container, data } = props
+      useSettingsStore().setMicroAppInfo(data)
+      microApp.mount(container?.querySelector('#app'))
+    },
+    bootstrap(props: any) {},
+    unmount(props: any) {
+      microApp?.unmount()
+    }
+  })
+}

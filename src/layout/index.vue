@@ -1,9 +1,14 @@
 <template>
   <div :class="classObj" class="app-wrapper" :style="{ '--current-color': theme }">
     <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <sidebar v-if="!sidebar.hide" class="sidebar-container" />
-    <div :class="{ hasTagsView: needTagsView, sidebarHide: sidebar.hide }" class="main-container">
-      <div :class="{ 'fixed-header': fixedHeader }">
+    <sidebar v-if="!sidebar.hide && !isMicroApp" class="sidebar-container" />
+    <div
+      :class="[
+        !isMicroApp ? 'main-container' : 'micro-container',
+        { hasTagsView: needTagsView, sidebarHide: sidebar.hide }
+      ]"
+    >
+      <div v-if="!isMicroApp" :class="{ 'fixed-header': fixedHeader }">
         <navbar @setLayout="setLayout" />
         <tags-view v-if="needTagsView" />
       </div>
@@ -23,6 +28,10 @@ import useAppStore from '@/store/modules/app'
 import useSettingsStore from '@/store/modules/settings'
 
 const settingsStore = useSettingsStore()
+const isMicroApp = computed(() => {
+  const mode = settingsStore.microAppInfo?.mode
+  return mode === 'microApp'
+})
 const theme = computed(() => settingsStore.theme)
 const sideTheme = computed(() => settingsStore.sideTheme)
 const sidebar = computed(() => useAppStore().sidebar)

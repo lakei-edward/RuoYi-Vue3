@@ -1,12 +1,8 @@
 <template>
-  <div
-    class="sidebar-logo-container"
-    :class="{ collapse: collapse }"
-    v-toggleTheme="[variables.menuBackgroundDark, variables.menuBackground]"
-  >
+  <div class="sidebar-logo-container" v-toggleTheme="[variables.menuBackgroundDark, variables.menuBackground]">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
+        <img v-if="logo" :src="logo" class="sidebar-logo" style="margin-right: 0" />
         <h1
           v-else
           class="sidebar-title"
@@ -17,7 +13,7 @@
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link flex items-center justify-center" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1
+        <h1     
           class="sidebar-title"
           :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }"
         >

@@ -7,6 +7,7 @@ const storageSetting = JSON.parse(localStorage.getItem('layout-setting')) || ''
 
 const useSettingsStore = defineStore('settings', {
   state: () => ({
+    microAppInfo: '',
     title: '',
     theme: storageSetting.theme || '#409EFF',
     sideTheme: storageSetting.sideTheme || sideTheme,
@@ -29,6 +30,10 @@ const useSettingsStore = defineStore('settings', {
     setTitle(title) {
       this.title = title
       useDynamicTitle()
+    },
+    // 存储微应用信息
+    setMicroAppInfo(info) {
+      this.microAppInfo = info
     }
   }
 })

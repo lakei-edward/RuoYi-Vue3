@@ -1,42 +1,24 @@
-.el-card {
+.ep-card {
   border: none;
-} // cover some element-ui styles
-.login {
-  input {
-    border: 0px;
-    color: #fff;
-    background-color: transparent;
-    -webkit-appearance: none;
-    border-radius: 0px;
-    &:-webkit-autofill,
-    textarea:-webkit-autofill,
-    select:-webkit-autofill {
-      -webkit-text-fill-color: #fff !important;
-      -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
-      background-color: transparent;
-      background-image: none;
-      transition: background-color 5000000s ease-in-out 0s; //背景色透明  生效时长  过渡效果  启用时延迟的时间
-    }
-  }
 }
 
-.el-breadcrumb__inner,
-.el-breadcrumb__inner a {
+.ep-breadcrumb__inner,
+.ep-breadcrumb__inner a {
   font-weight: 400 !important;
 }
 
-.el-upload {
+.ep-upload {
   input[type='file'] {
     display: none !important;
   }
 }
 
-.el-upload__input {
+.ep-upload__input {
   display: none;
 }
 
 .cell {
-  .el-tag {
+  .ep-tag {
     margin-right: 0px;
   }
 }
@@ -49,7 +31,7 @@
 }
 
 .fixed-width {
-  .el-button--mini {
+  .ep-button--mini {
     padding: 7px 10px;
     width: 60px;
   }
@@ -60,14 +42,14 @@
     padding: 0 10px;
     text-align: center;
 
-    .el-tag {
+    .ep-tag {
       margin-right: 0px;
     }
   }
 }
 
 // to fixed https://github.com/ElemeFE/element/issues/2461
-.el-dialog {
+.ep-dialog {
   transform: none;
   left: 0;
   position: relative;
@@ -76,10 +58,10 @@
 
 // refine element ui upload
 .upload-container {
-  .el-upload {
+  .ep-upload {
     width: 100%;
 
-    .el-upload-dragger {
+    .ep-upload-dragger {
       width: 100%;
       height: 200px;
     }
@@ -87,53 +69,34 @@
 }
 
 // dropdown
-.el-dropdown-menu {
+.ep-dropdown-menu {
   a {
     display: block;
   }
 }
 
 // fix date-picker ui bug in filter-item
-.el-range-editor.el-input__inner {
+.ep-range-editor.ep-input__inner {
   display: inline-flex !important;
 }
 
-// to fix el-date-picker css style
-.el-range-separator {
+// to fix ep-date-picker css style
+.ep-range-separator {
   box-sizing: content-box;
 }
 
-.el-menu--collapse > div > .el-submenu > .el-submenu__title .el-submenu__icon-arrow {
+.ep-menu--collapse > div > .ep-submenu > .ep-submenu__title .ep-submenu__icon-arrow {
   display: none;
 }
 
-.el-dropdown .el-dropdown-link {
-  color: var(--el-color-primary) !important;
-}
-
-.login {
-  input {
-    border: 0px;
-    color: #000;
-    background-color: transparent;
-    -webkit-appearance: none;
-    border-radius: 0px;
-    &:-webkit-autofill,
-    textarea:-webkit-autofill,
-    select:-webkit-autofill {
-      -webkit-text-fill-color: #000 !important;
-      -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
-      background-color: transparent;
-      background-image: none;
-      transition: background-color 5000000s ease-in-out 0s; //背景色透明  生效时长  过渡效果  启用时延迟的时间
-    }
-  }
+.ep-dropdown .ep-dropdown-link {
+  color: var(--ep-color-primary) !important;
 }
 .navbar {
-  .el-switch__core .el-switch__action {
+  .ep-switch__core .ep-switch__action {
     color: #000;
   }
 }
-.el-card {
+.ep-card {
   border: none !important;
 }

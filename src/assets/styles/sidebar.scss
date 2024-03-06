@@ -5,6 +5,11 @@
     margin-left: $base-sidebar-width;
     position: relative;
   }
+  .micro-container {
+    height: 100%;
+    transition: margin-left 0.28s;
+    position: relative;
+  }
 
   .sidebarHide {
     margin-left: 0 !important;

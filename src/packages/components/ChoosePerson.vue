@@ -29,7 +29,7 @@
         <el-table-column type="selection" align="center" />
         <el-table-column label="姓名" align="center" key="xm" prop="nickName" v-if="columns[0].visible" />
         <el-table-column
-          label="身份证号"
+          label="身份证号123"
           align="center"
           width="150"
           key="sfzh"
@@ -38,7 +38,7 @@
           :show-overflow-tooltip="true"
         />
         <el-table-column
-          label="警号"
+          label="警号werewr"
           align="center"
           key="userName"
           prop="userName"
